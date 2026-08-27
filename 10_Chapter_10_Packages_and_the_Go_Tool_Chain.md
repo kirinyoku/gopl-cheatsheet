@@ -1,6 +1,6 @@
 # Chapter 10. Packages and the Go Tool Chain
 
-Modular code architecture in Go: why compilation is lightning-fast (DAG dependency graphs), `package` and `import` mechanics, blank imports (`import _`) and the self-registration pattern, avoiding package name stuttering, CLI toolchain (`build`, `install`, `get`), cross-compilation (`GOOS`/`GOARCH`), build tags, private `internal/` packages, and documentation via `go doc`.
+Modular code architecture in Go: why compilation is exceptionally fast (DAG dependency graphs), `package` and `import` mechanics, blank imports (`import _`) and the self-registration pattern, avoiding package name stuttering, CLI toolchain (`build`, `install`, `get`), cross-compilation (`GOOS`/`GOARCH`), build tags, private `internal/` packages, and documentation via `go doc`.
 
 ---
 

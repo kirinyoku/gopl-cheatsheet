@@ -1,6 +1,6 @@
 # Chapter 12. Reflection
 
-Metaprogramming in Go: the necessity of reflection, `reflect.Type` and `reflect.Value`, distinguishing exact `Type` from structural `Kind`, recursive data structure traversal, addressability (`CanAddr`) and settability (`CanSet`), mutating variables through pointers with `Elem()`, the unexported field mutation trap, parsing struct field tags, dynamic method inspection, and the 3 operational costs of reflection.
+Metaprogramming in Go: the necessity of reflection, `reflect.Type` and `reflect.Value`, distinguishing exact `Type` from structural `Kind`, recursive data structure traversal, addressability (`CanAddr`) and settability (`CanSet`), mutating variables through pointers with `Elem()`, unexported field mutation restrictions, parsing struct field tags, dynamic method inspection, and the 3 operational costs of reflection.
 
 ---
 
@@ -96,7 +96,7 @@ fmt.Println(x) // 3
 ```
 
 > [!CAUTION]
-> **The Unexported Field Mutation Trap**:  
+> **Unexported Field Mutation Restriction**:  
 > Reflection can **read** unexported struct fields, but attempting to **write** to them (`v.Field(i).Set(...)`) triggers a **runtime panic**. For unexported private fields, `v.CanSet()` always evaluates to `false`.
 
 ---

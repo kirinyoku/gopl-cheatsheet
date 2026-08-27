@@ -1,13 +1,13 @@
 # Chapter 7. Interfaces
 
-Interfaces in Go as abstract behavioral contracts: implicit implementation without keywords, internal `(type, value)` dual-word structure, the deadly nil-pointer-in-interface trap, sorting with `sort.Interface`, HTTP handlers with `http.Handler`, type assertions, type switches, and idiomatic interface design principles.
+Interfaces in Go as abstract behavioral contracts: implicit implementation without keywords, internal `(type, value)` dual-word structure, typed `nil`-pointer interface semantics, sorting with `sort.Interface`, HTTP handlers with `http.Handler`, type assertions, type switches, and idiomatic interface design principles.
 
 ---
 
 ### Table of Contents
 * [7.1. Interfaces as Behavioral Contracts](#71-interfaces-as-behavioral-contracts)
 * [7.2. Implicit Implementation](#72-implicit-implementation)
-* [7.3. Interface Values Under the Hood](#73-interface-values-under-the-hood)
+* [7.3. Internal Structure of Interface Values](#73-internal-structure-of-interface-values)
 * [7.4. Sorting with `sort.Interface` and Web Handlers with `http.Handler`](#74-sorting-with-sortinterface-and-web-handlers-with-httphandler)
 * [7.5. Type Assertions](#75-type-assertions)
 * [7.6. Type Switches](#76-type-switches)
@@ -74,7 +74,7 @@ x = []int{1, 2, 3}
 
 ---
 
-## 7.3. Interface Values Under the Hood
+## 7.3. Internal Structure of Interface Values
 
 Conceptually, an interface value consists of two machine words:
 1. **Dynamic Type (Type Descriptor)** — Points to the runtime type information (`*bytes.Buffer`, `int`).
@@ -85,7 +85,7 @@ Interface Value: [ Dynamic Type (*os.File) | Dynamic Value Pointer (&os.Stdout) 
 ```
 
 > [!CAUTION]
-> **The Critical Trap: A nil pointer inside an interface is NOT equal to nil!**  
+> **Critical Hazard: A typed nil pointer inside an interface is NOT equal to nil!**  
 > An interface value equals `nil` **only when both its dynamic type and dynamic value are nil**. If an interface contains a concrete type descriptor but a `nil` pointer value, evaluating `if iface != nil` yields `true`:
 >
 > ```go

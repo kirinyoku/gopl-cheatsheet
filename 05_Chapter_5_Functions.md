@@ -35,7 +35,7 @@ func name(parameterList) (resultList) {
 ## 5.2. Recursion and the Dynamic Stack
 
 * Go functions can call themselves recursively, making them natural for traversing hierarchical tree structures (HTML DOMs, ASTs, graph networks).
-* **The Dynamic Stack (Go Superpower)**:
+* **The Dynamic Call Stack**:
   * In conventional languages (C, C++, Java), thread call stacks have a fixed size (typically 1–8 MB), causing deep recursion to trigger fatal `Stack Overflow` errors.
   * In Go, each goroutine starts with a tiny stack (~2 KB) that **dynamically grows and shrinks** on demand up to a configurable ceiling (`debug.SetMaxStack`, defaulting to ~1 GB on 64-bit platforms). Deep recursion is inherently safe and practical in Go.
 
@@ -134,7 +134,7 @@ fmt.Println(f()) // 9
 * An anonymous function forms a **closure**: it captures references to outer variables (`x`), which the compiler automatically promotes to heap storage to maintain state across calls.
 
 > [!CAUTION]
-> **The Classic Loop Variable Capture Trap**:  
+> **Loop Variable Capture in Closures**:  
 > All closures created inside a loop share the **exact same memory address** of the loop variable!
 >
 > ```go

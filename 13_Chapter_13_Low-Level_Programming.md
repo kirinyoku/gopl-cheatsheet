@@ -1,6 +1,6 @@
 # Chapter 13. Low-Level Programming
 
-Low-level systems programming in Go: memory layout and type sizes (`unsafe.Sizeof`), memory alignment and struct field padding optimization, universal `unsafe.Pointer` casting, address arithmetic with `uintptr` and the GC pointer movement trap, deep equality for cyclic graphs, and C interoperability via `cgo`.
+Low-level systems programming in Go: memory layout and type sizes (`unsafe.Sizeof`), memory alignment and struct field padding optimization, universal `unsafe.Pointer` casting, address arithmetic with `uintptr` and GC memory movement hazards, deep equality for cyclic graphs, and C interoperability via `cgo`.
 
 ---
 
@@ -79,7 +79,7 @@ pb := (*int16)(unsafe.Pointer(uintptr(unsafe.Pointer(&x)) + unsafe.Offsetof(x.b)
 ```
 
 > [!CAUTION]
-> **The Deadly Temporary `uintptr` Trap**:  
+> **Temporary `uintptr` Memory Corruption Hazard**:  
 > ```go
 > // BUGGY:
 > tmp := uintptr(unsafe.Pointer(&x)) + unsafe.Offsetof(x.b)

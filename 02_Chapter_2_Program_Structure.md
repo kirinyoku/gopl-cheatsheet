@@ -11,7 +11,7 @@ Foundational principles of Go program organization: naming conventions and expor
 * [2.4. Assignments and the Comma-Ok Idiom](#24-assignments-and-the-comma-ok-idiom)
 * [2.5. Type Declarations and Named Types](#25-type-declarations-and-named-types)
 * [2.6. Packages, Files, and Package Initialization (`init`)](#26-packages-files-and-package-initialization-init)
-* [2.7. Scope vs Lifetime and the Variable Shadowing Trap](#27-scope-vs-lifetime-and-the-variable-shadowing-trap)
+* [2.7. Scope vs Lifetime and Variable Shadowing](#27-scope-vs-lifetime-and-variable-shadowing)
 
 ---
 
@@ -159,14 +159,14 @@ func init() {
 
 ---
 
-## 2.7. Scope vs Lifetime and the Variable Shadowing Trap
+## 2.7. Scope vs Lifetime and Variable Shadowing
 
 ### Core Distinction
 * **Scope** — The syntactic block of source code where a name is visible to the compiler (compile-time property).
 * **Lifetime** — The duration for which a variable exists in memory (runtime property).
 
 > [!CAUTION]
-> **The Classic Variable Shadowing Trap**:  
+> **Unintended Variable Shadowing Hazard**:  
 > Accidentally using `:=` in an inner block creates a **new local variable**, leaving the outer package-level variable uninitialized:
 >
 > ```go

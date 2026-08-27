@@ -120,7 +120,7 @@ If an internal test for a low-level package like `net/url` needs to import a hig
 * Place the test into an external test package: `package url_test` (inside `url_test.go`).
 * `go test` compiles it as an independent external consumer package, cleanly breaking the cycle.
 
-### The `export_test.go` Pattern ("Backdoor Access"):
+### The `export_test.go` Pattern (Accessing Unexported Identifiers):
 To expose an unexported symbol `internalHelper` exclusively to external tests in `package url_test` without polluting the public API:
 ```go
 // File export_test.go (compiled ONLY during go test):

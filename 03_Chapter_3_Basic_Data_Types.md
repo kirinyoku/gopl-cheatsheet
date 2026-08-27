@@ -56,7 +56,7 @@ Two standard IEEE 754 floating-point types:
 * `float32` — ~6 decimal digits of precision.
 * `float64` — ~15 decimal digits of precision (**standard default choice**).
 
-### Special Values and the `NaN` Trap
+### Special Values and `NaN` Comparison Mechanics
 * `+Inf` and `-Inf` — Positive and negative infinity (e.g., non-zero division by zero).
 * `NaN` (Not a Number) — Undefined mathematical operations (`0.0 / 0.0`, `math.Sqrt(-1)`).
 

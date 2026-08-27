@@ -28,7 +28,7 @@ Go embraces the **CSP model**: independent concurrent activities (goroutines) co
   go doWork() // Executes asynchronously in a new goroutine
   ```
 * **Main Goroutine**: The `main()` function executes in the primary goroutine. When `main()` returns, **all background goroutines are immediately terminated**.
-* **No Preemptive Kill**: Go provides no external mechanism to forcibly kill a running goroutine. A goroutine must terminate cooperatively by responding to a cancellation signal.
+* **No External Termination**: Go provides no external mechanism to forcibly terminate a running goroutine. A goroutine must terminate cooperatively by responding to a cancellation signal.
 
 ---
 

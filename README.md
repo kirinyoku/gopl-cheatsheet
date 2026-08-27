@@ -27,19 +27,19 @@
   *Naming conventions and export rules (Public/Private), Zero Values, pointers, compiler escape analysis (stack vs heap), named types, package `init()` ordering, scope, and variable shadowing pitfalls (`:=`).*
 
 * [**Chapter 3. Basic Data Types**](03_Chapter_3_Basic_Data_Types.md)  
-  *Integers and bitwise arithmetic, floating-point numbers and `NaN` traps, boolean operators, string immutability and UTF-8 encoding, runes (`rune`), efficient concatenation with `bytes.Buffer`, constants, `iota` generator, and untyped literals.*
+  *Integers and bitwise arithmetic, floating-point numbers and `NaN` comparison mechanics, boolean operators, string immutability and UTF-8 encoding, runes (`rune`), efficient concatenation with `bytes.Buffer`, constants, `iota` generator, and untyped literals.*
 
 * [**Chapter 4. Composite Types**](04_Chapter_4_Composite_Types.md)  
-  *Fixed-size arrays, dynamic slices (internals of `ptr/len/cap`, growth strategy of `append`, in-place algorithms), hash tables (`map`) and `nil map` traps, structs, composition via anonymous field embedding, JSON serialization and struct tags, `text/template` and `html/template`.*
+  *Fixed-size arrays, dynamic slices (internals of `ptr/len/cap`, growth strategy of `append`, in-place algorithms), hash tables (`map`) and `nil map` write hazards, structs, composition via anonymous field embedding, JSON serialization and struct tags, `text/template` and `html/template`.*
 
 * [**Chapter 5. Functions**](05_Chapter_5_Functions.md)  
-  *Signatures and pass-by-value semantics, growable dynamic stack and recursion, multiple and named return values, 5 error-handling strategies (`error` and `io.EOF`), first-class functions, closures and loop variable capture trap, variadic functions, `defer`, `panic`, and `recover`.*
+  *Signatures and pass-by-value semantics, growable dynamic stack and recursion, multiple and named return values, 5 error-handling strategies (`error` and `io.EOF`), first-class functions, closures and loop variable capture mechanics, variadic functions, `defer`, `panic`, and `recover`.*
 
 * [**Chapter 6. Methods**](06_Chapter_6_Methods.md)  
   *Method declarations and receivers, choosing between value and pointer receivers (`T` vs `*T`), safe invocations on `nil` receivers, composition instead of inheritance (method promotion), method values and method expressions, package-level encapsulation.*
 
 * [**Chapter 7. Interfaces**](07_Chapter_7_Interfaces.md)  
-  *Interfaces as behavioral contracts, implicit satisfaction (without `implements`), empty interface `any`, `(type, value)` internal pair, the deadly `nil`-pointer interface trap, `sort.Interface`, `http.Handler`, type assertions (`x.(T)`), `type switch`, and interface design principles.*
+  *Interfaces as behavioral contracts, implicit satisfaction (without `implements`), empty interface `any`, `(type, value)` internal pair, typed `nil`-pointer interface semantics, `sort.Interface`, `http.Handler`, type assertions (`x.(T)`), `type switch`, and interface design principles.*
 
 * [**Chapter 8. Goroutines and Channels**](08_Chapter_8_Goroutines_and_Channels.md)  
   *CSP concurrency model, lifecycle of goroutines and `main()`, synchronous unbuffered channels (`happens-before`), pipelines and channel closing rules, unidirectional channels, buffered channels and goroutine leaks, `sync.WaitGroup`, counting semaphores, multiplexing with `select`, and broadcast cancellation.*
@@ -57,7 +57,7 @@
   *Purpose of `reflect`, `reflect.Type` and `reflect.Value` descriptors, difference between `Type` and `Kind`, recursive traversal of complex data, addressability (`CanAddr`) and settability (`CanSet`), updating via `Elem()`, protecting unexported fields, struct field tags (`field.Tag.Get`), and the costs of reflection.*
 
 * [**Chapter 13. Low-Level Programming**](13_Chapter_13_Low-Level_Programming.md)  
-  *Memory layout of data types (`unsafe.Sizeof`), alignment and padding in structs, field packing optimization, universal `unsafe.Pointer` pointers and address arithmetic with `uintptr`, GC memory movement trap, deep equality for cyclic graphs, and C integration via `cgo` (`import "C"`).*
+  *Memory layout of data types (`unsafe.Sizeof`), alignment and padding in structs, field packing optimization, universal `unsafe.Pointer` pointers and address arithmetic with `uintptr`, GC memory movement hazards, deep equality for cyclic graphs, and C integration via `cgo` (`import "C"`).*
 
 ---
 
@@ -86,7 +86,7 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **Cancellation (Broadcast)** — Terminating groups of goroutines via channel closing `close(done)` $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 * **Cgo (`import "C"`)** — Interoperability with C libraries and memory management $\to$ [Chapter 13](13_Chapter_13_Low-Level_Programming.md)
 * **Channels (`chan`)** — Typed synchronization and communication pipes $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
-* **Closures** — Capturing surrounding lexical variables and the loop-variable trap $\to$ [Chapter 5](05_Chapter_5_Functions.md)
+* **Closures** — Capturing surrounding lexical variables and loop-variable capture mechanics $\to$ [Chapter 5](05_Chapter_5_Functions.md)
 * **Command-Line Arguments** — Working with `os.Args` and parsing flags with `flag` $\to$ [Chapter 1](01_Chapter_1_Tutorial.md), [Chapter 2](02_Chapter_2_Program_Structure.md)
 * **Composition over Inheritance** — Embedding structs and promoting methods $\to$ [Chapter 4](04_Chapter_4_Composite_Types.md), [Chapter 6](06_Chapter_6_Methods.md)
 * **Constants & `iota`** — Compile-time expressions, enum generator, and untyped literals $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
@@ -143,9 +143,9 @@ An alphabetical reference of key terms, language mechanics, and standard library
 
 ### N
 * **Named Types (`type`)** — Defining distinct domain types and attaching methods $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md)
-* **`NaN` (Not a Number)** — Float edge-cases and equality comparison trap (`math.IsNaN`) $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
+* **`NaN` (Not a Number)** — Float edge-cases and equality comparison mechanics (`math.IsNaN`) $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
 * **Nil Receiver Calls** — Allowing methods to be safely invoked on `nil` pointer values $\to$ [Chapter 6](06_Chapter_6_Methods.md)
-* **Nil-Pointer in Interface Trap** — Why an interface containing a typed `nil` pointer is not equal to `nil` $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
+* **Nil-Pointer in Interface Semantics** — Why an interface containing a typed `nil` pointer is not equal to `nil` $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
 
 ### P
 * **Packages & Imports** — Code organization, DAG dependency rule, and avoiding stuttering $\to$ [Chapter 10](10_Chapter_10_Packages_and_the_Go_Tool_Chain.md)
