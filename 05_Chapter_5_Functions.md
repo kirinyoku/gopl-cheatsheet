@@ -5,6 +5,7 @@ A comprehensive guide to functions in Go: signatures and call semantics, the dyn
 ---
 
 ### Table of Contents
+
 * [5.1. Function Declarations and Call Semantics](#51-function-declarations-and-call-semantics)
 * [5.2. Recursion and the Dynamic Stack](#52-recursion-and-the-dynamic-stack)
 * [5.3. Multiple Return Values and Bare Returns](#53-multiple-return-values-and-bare-returns)
@@ -25,6 +26,7 @@ func name(parameterList) (resultList) {
 ```
 
 ### Core Rules
+
 * **Signature (Function Type)**: Defined solely by parameter types and return types (e.g., `func(int, int) bool`). Parameter names do not affect the signature type.
 * **No Default Values**: Go has **no default parameter values** and **no named keyword arguments** (`f(x=1)`). All arguments are supplied explicitly and positionally.
 * **Strict Pass-by-Value**: Functions always receive **copies** of arguments.
@@ -59,6 +61,7 @@ func findLinks(url string) ([]string, error) {
 ```
 
 ### Named Result Values and Bare Returns
+
 Return values can be named directly in the signature, initializing them to their type's zero value:
 
 ```go
@@ -80,6 +83,7 @@ func Count(url string) (words, images int, err error) {
 Go rejects exception hierarchies for routine errors. Errors are standard values implementing the built-in `error` interface (`nil` indicates success; non-`nil` indicates failure).
 
 ### 5 Idiomatic Error-Handling Strategies:
+
 1. **Propagation with Context**:
    ```go
    doc, err := html.Parse(resp.Body)
@@ -94,6 +98,7 @@ Go rejects exception hierarchies for routine errors. Errors are standard values 
 5. **Intentional Silence**: Discarding errors only when guaranteed safe (e.g., `os.RemoveAll(tmpDir)`).
 
 ### The `io.EOF` Sentinel Marker
+
 To distinguish clean stream termination from network/disk I/O failures, the `io.EOF` sentinel error is used:
 
 ```go
@@ -131,6 +136,7 @@ fmt.Println(f()) // 1
 fmt.Println(f()) // 4
 fmt.Println(f()) // 9
 ```
+
 * An anonymous function forms a **closure**: it captures references to outer variables (`x`), which the compiler automatically promotes to heap storage to maintain state across calls.
 
 > [!CAUTION]
@@ -191,6 +197,7 @@ func ReadFile(filename string) ([]byte, error) {
 ```
 
 ### `defer` Execution Rules:
+
 1. **LIFO Stack Order**: Multiple deferred statements execute in reverse order (the last deferred call runs first).
 2. **Argument Evaluation Timing**: Arguments to deferred functions are evaluated **at the moment the `defer` line executes**, not when the function body eventually runs.
 3. **Mutating Named Return Values**: A deferred closure can inspect and modify named return values before they are returned to the caller.
@@ -205,10 +212,12 @@ func ReadFile(filename string) ([]byte, error) {
 ## 5.8. Panic and Recover
 
 ### Runtime Panics (`panic`)
+
 * A `panic` halts normal execution immediately, unwinds the stack executing all deferred functions in the current goroutine, and terminates the program with a stack trace.
 * **Usage**: Reserved for unrecoverable programmer bugs (out-of-bounds index, nil dereference, broken internal invariants) or `Must...` initialization helpers (`regexp.MustCompile`). Never use `panic` for expected I/O errors!
 
 ### Graceful Recovery (`recover`)
+
 `recover()` intercepts an in-flight panic, halts stack unwinding, and returns the value supplied to `panic`:
 
 ```go

@@ -5,6 +5,7 @@ Low-level systems programming in Go: memory layout and type sizes (`unsafe.Sizeo
 ---
 
 ### Table of Contents
+
 * [13.1. Type Memory Layout: `unsafe.Sizeof`, `Alignof`, and `Offsetof`](#131-type-memory-layout-unsafesizeof-alignof-and-offsetof)
 * [13.2. Pointers, `unsafe.Pointer`, and Address Arithmetic](#132-pointers-unsafepointer-and-address-arithmetic)
 * [13.3. Deep Equality for Cyclic Data Structures](#133-deep-equality-for-cyclic-data-structures)
@@ -18,6 +19,7 @@ Low-level systems programming in Go: memory layout and type sizes (`unsafe.Sizeo
 The `unsafe` package is implemented directly by the compiler and provides mechanisms to inspect the physical memory representation of Go data types.
 
 ### Standard Type Sizes (`unsafe.Sizeof`)
+
 Calls to `unsafe.Sizeof(x)` are compile-time constants (type `uintptr`) representing the fixed byte size of a type (1 machine word = 8 bytes on 64-bit, 4 bytes on 32-bit):
 
 | Go Data Type | Size in Bytes (64-bit) | Internal Representation |
@@ -35,6 +37,7 @@ Calls to `unsafe.Sizeof(x)` are compile-time constants (type `uintptr`) represen
 ---
 
 ### Memory Alignment and Padding
+
 Hardware reads memory in multi-byte chunks, requiring data addresses to be multiples of their size (2 for `int16`, 4 for `int32`, 8 for `int64` and pointers). To enforce alignment boundaries, the compiler inserts unused **padding bytes**.
 
 > [!TIP]
@@ -66,12 +69,14 @@ Hardware reads memory in multi-byte chunks, requiring data addresses to be multi
 `unsafe.Pointer` is an untyped pointer (analogous to `void*` in C) capable of holding the address of any Go variable.
 
 ### Valid Conversion Diagram:
+
 $$\text{Typed Pointer } *T \longleftrightarrow \text{unsafe.Pointer} \longleftrightarrow \text{uintptr}$$
 
 * `unsafe.Pointer` values are tracked and updated by the **Garbage Collector (GC)**.
 * `uintptr` is an unsigned integer type used to perform numerical address arithmetic (offset addition).
 
 ### Idiomatic Pointer Arithmetic:
+
 ```go
 // Accessing a struct field directly via byte offset:
 pb := (*int16)(unsafe.Pointer(uintptr(unsafe.Pointer(&x)) + unsafe.Offsetof(x.b)))
@@ -128,6 +133,7 @@ func CompressInit(stream *C.bz_stream) {
 ```
 
 ### `cgo` Memory and Type Rules:
+
 1. **String Conversions**:
    * Go to C: `cs := C.CString(goStr)` — **Allocates memory in the C heap**.
    * **Mandatory cleanup**: `defer C.free(unsafe.Pointer(cs))` (requires `#include <stdlib.h>`).
@@ -144,6 +150,7 @@ func CompressInit(stream *C.bz_stream) {
 > *«Use unsafe only when strictly necessary, and encapsulate it behind a completely safe public API.»*
 
 ### 3 Primary Risks:
+
 1. **Loss of Portability**: Code becomes tied to architecture word sizes (32-bit vs 64-bit) and byte endianness.
 2. **Compatibility Breakage**: Internal runtime layouts and compiler conventions are not guaranteed by the Go 1 compatibility promise and may break in future releases.
 3. **Memory Corruption**: Erroneous pointer arithmetic causes silent heap corruption, memory leaks, and severe runtime crashes.

@@ -5,6 +5,7 @@ An exploration of object-oriented design in Go: method declarations, value vs po
 ---
 
 ### Table of Contents
+
 * [6.1. Method Declarations and Receivers](#61-method-declarations-and-receivers)
 * [6.2. Value vs Pointer Receivers (`*T`)](#62-value-vs-pointer-receivers-t)
 * [6.3. Composition Over Inheritance (Struct Embedding)](#63-composition-over-inheritance-struct-embedding)
@@ -30,6 +31,7 @@ func (p Point) Distance(q Point) float64 {
 ```
 
 ### Key Rules
+
 * **Receiver Naming**: Go **does not use keywords like `this` or `self`**. Idiomatic convention favors short, 1–2 letter names derived from the type's initial letter (`p` for `Point`, `c` for `Client`).
 * **Methods on Any Named Type**: Methods can be declared on structs, numbers, booleans, strings, slices, maps, channels, and function types:
   ```go
@@ -51,6 +53,7 @@ func (p *Point) ScaleBy(factor float64) {
 ```
 
 ### When to Use a Pointer Receiver `*T`:
+
 1. When the method needs to **mutate the caller's state**.
 2. When the receiver is a large struct and copying it on each call would be **computationally expensive**.
 
@@ -58,12 +61,14 @@ func (p *Point) ScaleBy(factor float64) {
 > **Consistency Rule**: If any method on a named type requires a pointer receiver `*T`, **all methods on that type should be defined with pointer receivers** for API consistency.
 
 ### Automatic Address-Of and Dereferencing
+
 Go compiler automatically adapts receiver types at call sites:
 * On a value `p`, calling `p.ScaleBy(2)` is compiled automatically as `(&p).ScaleBy(2)`.  
   *Caveat*: This works only for *addressable* variables. Calling pointer methods on non-addressable values (e.g., map lookups `m["k"].ScaleBy(2)` or function return values) causes a compile error.
 * On a pointer `pptr`, calling `pptr.Distance(q)` is compiled automatically as `(*pptr).Distance(q)`.
 
 ### `nil` as a Valid Receiver
+
 Methods can safely be called on `nil` pointer receivers if the method body explicitly handles `nil`:
 
 ```go
@@ -80,6 +85,7 @@ func (list *IntList) Sum() int {
     return list.Value + list.Tail.Sum()
 }
 ```
+
 *Standard library example*: `url.Values(nil).Get("key")` safely returns `""` without panicking.
 
 ---
@@ -110,6 +116,7 @@ type ColoredPoint struct {
 * **Crucial Difference**: `ColoredPoint` **is not a subtype of** `Point` (there is no subclass polymorphism). You cannot pass `cp` directly to a function expecting `Point` without explicitly accessing `cp.Point`.
 
 ### Embedded Mutex Pattern:
+
 ```go
 var cache = struct {
     sync.Mutex // Embedded mutex
@@ -132,17 +139,22 @@ func Lookup(key string) string {
 Methods can be stored in variables and passed as standard function objects:
 
 ### 1. Method Value (`obj.Method`)
+
 Binds a method to a specific instance:
+
 ```go
 p := Point{1, 2}
 distanceFromP := p.Distance // Yields func(Point) float64
 
 fmt.Println(distanceFromP(q)) // p is captured and supplied automatically
 ```
+
 *Ideal for callbacks*: `time.AfterFunc(time.Second, rocket.Launch)`.
 
 ### 2. Method Expression (`T.Method`)
+
 Yields a function where the receiver becomes the explicit first parameter:
+
 ```go
 dist := Point.Distance    // func(Point, Point) float64
 scale := (*Point).ScaleBy // func(*Point, float64)

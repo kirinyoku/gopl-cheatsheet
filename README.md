@@ -66,6 +66,7 @@
 An alphabetical reference of key terms, language mechanics, and standard library concepts with direct links to corresponding chapter sections:
 
 ### A
+
 * **Address & Dereference (`&`, `*`)** — Taking variable addresses and accessing underlying values $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md), [Chapter 13](13_Chapter_13_Low-Level_Programming.md)
 * **Alignment & Padding** — Memory address boundaries and struct size optimization $\to$ [Chapter 13](13_Chapter_13_Low-Level_Programming.md)
 * **Anonymous Fields (Embedding)** — Struct composition without explicit field names $\to$ [Chapter 4](04_Chapter_4_Composite_Types.md), [Chapter 6](06_Chapter_6_Methods.md)
@@ -74,6 +75,7 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **Arrays (`[N]T`) vs Slices (`[]T`)** — Fixed-size value types vs lightweight dynamic headers $\to$ [Chapter 4](04_Chapter_4_Composite_Types.md)
 
 ### B
+
 * **Basic Data Types** — Integers, floating-point numbers, complex numbers, and booleans $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
 * **Benchmarks (`BenchmarkXxx`)** — Performance measurement, iteration scaling (`b.N`), and allocation profiling (`-benchmem`) $\to$ [Chapter 11](11_Chapter_11_Testing.md)
 * **Bitwise Operations** — Bit manipulation operators (`&`, `|`, `^`, `&^`, `<<`, `>>`) $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
@@ -83,6 +85,7 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **`bytes.Buffer` / `strings.Builder`** — Efficient zero-allocation string building $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
 
 ### C
+
 * **Cancellation (Broadcast)** — Terminating groups of goroutines via channel closing `close(done)` $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 * **Cgo (`import "C"`)** — Interoperability with C libraries and memory management $\to$ [Chapter 13](13_Chapter_13_Low-Level_Programming.md)
 * **Channels (`chan`)** — Typed synchronization and communication pipes $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
@@ -94,6 +97,7 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **Cross-Compilation** — Native builds for any OS/CPU target using `GOOS` and `GOARCH` $\to$ [Chapter 10](10_Chapter_10_Packages_and_the_Go_Tool_Chain.md)
 
 ### D
+
 * **Data Races** — Concurrent memory access with at least one write, and prevention rules $\to$ [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 * **Deadlock** — Permanent program hang due to cyclic locking or blocked channels $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md), [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 * **Deferred Calls (`defer`)** — LIFO cleanup invocation upon function exit $\to$ [Chapter 5](05_Chapter_5_Functions.md)
@@ -101,6 +105,7 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **Dynamic Stack** — Auto-growing goroutine stacks starting at 2 KB $\to$ [Chapter 5](05_Chapter_5_Functions.md), [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 
 ### E
+
 * **Empty Interface (`any` / `interface{}`)** — The universal type satisfied by all values $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
 * **Encapsulation** — Package-level visibility via uppercase/lowercase identifier names $\to$ [Chapter 6](06_Chapter_6_Methods.md)
 * **Errors (`error`)** — Explicit error values, 5 handling strategies, and sentinel `io.EOF` $\to$ [Chapter 5](05_Chapter_5_Functions.md)
@@ -109,30 +114,37 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **Export Rules** — Public (capitalized) vs package-private (lowercase) declarations $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md)
 
 ### F
+
 * **Functions** — Signatures, multiple returns, named results, and variadic parameters $\to$ [Chapter 5](05_Chapter_5_Functions.md)
 * **Fuzzing & Random Testing** — Deterministic pseudo-random test inputs with logged seeds $\to$ [Chapter 11](11_Chapter_11_Testing.md)
 
 ### G
+
 * **`GOMAXPROCS`** — Controlling the number of OS threads executing user-level Go code $\to$ [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 * **Goroutine Leak** — Blocked goroutines permanently retained in memory $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 * **Goroutines** — Lightweight concurrent threads managed by the Go runtime $\to$ [Chapter 1](01_Chapter_1_Tutorial.md), [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md), [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 
 ### H
+
 * **`http.Handler` & `HandlerFunc`** — Standard web handler interfaces and function adapters $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
 
 ### I
+
 * **`init()` Functions** — Package initialization functions executed automatically at startup $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md)
 * **Interfaces** — Behavioral contracts, implicit implementation, and `(type, value)` internals $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
 * **Internal Packages (`internal/`)** — Enforcing encapsulation across module boundaries $\to$ [Chapter 10](10_Chapter_10_Packages_and_the_Go_Tool_Chain.md)
 * **Iteration (`for range`)** — Traversing slices, arrays, maps, strings (by rune), and channels $\to$ [Chapter 1](01_Chapter_1_Tutorial.md), [Chapter 4](04_Chapter_4_Composite_Types.md), [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 
 ### J
+
 * **JSON Serialization** — Marshaling, unmarshaling, stream encoders, and struct field tags $\to$ [Chapter 4](04_Chapter_4_Composite_Types.md)
 
 ### L
+
 * **Low-Level Programming (`unsafe`)** — Memory inspection, pointer conversions, and alignment $\to$ [Chapter 13](13_Chapter_13_Low-Level_Programming.md)
 
 ### M
+
 * **Maps (`map[K]V`)** — Hash tables, comma-ok idiom, and the panic risk of writing to a `nil map` $\to$ [Chapter 4](04_Chapter_4_Composite_Types.md)
 * **Memory Barriers & Visibility** — Enforcing CPU cache synchronization and compiler ordering $\to$ [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 * **Method Expressions (`T.Method`)** — Functions with an explicit first receiver parameter $\to$ [Chapter 6](06_Chapter_6_Methods.md)
@@ -142,12 +154,14 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **Mutexes (`sync.Mutex`, `sync.RWMutex`)** — Mutual exclusion locks for shared state $\to$ [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 
 ### N
+
 * **Named Types (`type`)** — Defining distinct domain types and attaching methods $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md)
 * **`NaN` (Not a Number)** — Float edge-cases and equality comparison mechanics (`math.IsNaN`) $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
 * **Nil Receiver Calls** — Allowing methods to be safely invoked on `nil` pointer values $\to$ [Chapter 6](06_Chapter_6_Methods.md)
 * **Nil-Pointer in Interface Semantics** — Why an interface containing a typed `nil` pointer is not equal to `nil` $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
 
 ### P
+
 * **Packages & Imports** — Code organization, DAG dependency rule, and avoiding stuttering $\to$ [Chapter 10](10_Chapter_10_Packages_and_the_Go_Tool_Chain.md)
 * **Panic & Recover** — Halting execution on severe programmer bugs and graceful recovery $\to$ [Chapter 5](05_Chapter_5_Functions.md)
 * **Pipelines** — Chaining stages of concurrent data processing through channels $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
@@ -155,11 +169,13 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **Profiling (`pprof`)** — CPU, memory heap, and goroutine blocking analysis $\to$ [Chapter 11](11_Chapter_11_Testing.md)
 
 ### R
+
 * **Race Detector (`-race`)** — Dynamic runtime data race analyzer based on ThreadSanitizer $\to$ [Chapter 9](09_Chapter_9_Concurrency_and_Shared_Variables.md)
 * **Reflection (`reflect`)** — Inspecting and mutating types and values at runtime (`Type` vs `Kind`, `CanSet`) $\to$ [Chapter 12](12_Chapter_12_Reflection.md)
 * **Runes (`rune`)** — Unicode code points represented as `int32` $\to$ [Chapter 3](03_Chapter_3_Basic_Data_Types.md)
 
 ### S
+
 * **Scope vs Lifetime** — Lexical visibility at compile-time vs variable duration in memory $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md)
 * **`select` Multiplexing** — Multi-channel event waiting, non-blocking default, and pseudo-random choice $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 * **Semaphores (Counting)** — Concurrency rate-limiting via buffered token channels $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
@@ -173,19 +189,23 @@ An alphabetical reference of key terms, language mechanics, and standard library
 * **`sync.WaitGroup`** — Coordinating completion across dynamic sets of workers $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 
 ### T
+
 * **Table-Driven Tests** — Standard Go idiom for parametrized testing $\to$ [Chapter 11](11_Chapter_11_Testing.md)
 * **Templates (`text/template`, `html/template`)** — Data-driven text output and contextual XSS auto-escaping $\to$ [Chapter 4](04_Chapter_4_Composite_Types.md)
 * **Type Assertions (`x.(T)`)** — Dynamic extraction of concrete or interface types from an interface $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
 * **Type Switch (`switch x.(type)`)** — Multi-way type branching construct $\to$ [Chapter 7](07_Chapter_7_Interfaces.md)
 
 ### U
+
 * **Unbuffered Channels** — Synchronous rendezvous communication guaranteeing `happens-before` $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 * **Unidirectional Channels (`chan<-`, `<-chan`)** — Type-safe restriction to send-only or receive-only operations $\to$ [Chapter 8](08_Chapter_8_Goroutines_and_Channels.md)
 * **`unsafe.Pointer` & `uintptr`** — Arbitrary memory pointer conversion and address arithmetic caveats $\to$ [Chapter 13](13_Chapter_13_Low-Level_Programming.md)
 
 ### V
+
 * **Variable Shadowing** — Unintentional masking of outer variables caused by `:=` inside nested blocks $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md)
 * **Variadic Functions (`...T`)** — Functions accepting variable numbers of trailing arguments $\to$ [Chapter 5](05_Chapter_5_Functions.md)
 
 ### Z
+
 * **Zero Values** — Deterministic default initialization for uninitialized memory $\to$ [Chapter 2](02_Chapter_2_Program_Structure.md)

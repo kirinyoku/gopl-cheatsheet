@@ -5,6 +5,7 @@ Traditional shared-memory concurrency mechanisms: the nature of data races, mute
 ---
 
 ### Table of Contents
+
 * [9.1. Data Races](#91-data-races)
 * [9.2. Mutual Exclusion with `sync.Mutex`](#92-mutual-exclusion-with-syncmutex)
 * [9.3. Read/Write Mutexes (`sync.RWMutex`)](#93-readwrite-mutexes-syncrwmutex)
@@ -28,6 +29,7 @@ Traditional shared-memory concurrency mechanisms: the nature of data races, mute
 > **Go Axiom**: *«There is no such thing as a benign data race.»* Every data race is a critical software defect.
 
 ### 3 Strategies to Prevent Data Races:
+
 1. **Immutability**: Initialize data structures fully before launching goroutines, then treat them as read-only.
 2. **Confinement**: Restrict variable access to a single monitor goroutine, interacting strictly through channel requests.
 3. **Mutual Exclusion**: Allow multiple goroutines access, but strictly one at a time using mutex locks.
@@ -56,6 +58,7 @@ func Balance() int {
 ```
 
 ### Mutex Rules:
+
 * **Always use `defer mu.Unlock()`**: Ensures locks are released on all return paths and in the event of a panic.
 * **Go Mutexes are NOT Reentrant (Non-Recursive)**: Attempting to lock a mutex that the current goroutine already holds immediately triggers a fatal **Deadlock**.
 * **Function Splitting Pattern**: Separate public locked methods from private unexported helper functions (e.g., `deposit(amount)`) that assume the lock is already held.
@@ -128,6 +131,7 @@ go test -race ./...
 go run -race main.go
 go build -race
 ```
+
 * Instruments memory accesses, reporting full conflicting goroutine stack traces when an unsynchronized read/write collision is detected.
 
 ---
@@ -177,6 +181,7 @@ func (memo *Memo) Get(key string) (any, error) {
 | **Identity (ID)** | Exposes `Thread ID` | **No Goroutine ID by design** |
 
 ### Why Go Has No Goroutine ID
+
 Go intentionally omits a Goroutine ID to prevent anti-patterns like Thread-Local Storage (TLS), which allows functions to implicitly depend on hidden global state. In Go, context and dependencies are always passed **explicitly** (e.g., via `context.Context`).
 
 > [!NOTE]

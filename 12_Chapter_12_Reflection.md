@@ -5,6 +5,7 @@ Metaprogramming in Go: the necessity of reflection, `reflect.Type` and `reflect.
 ---
 
 ### Table of Contents
+
 * [12.1. Why Reflection Is Needed](#121-why-reflection-is-needed)
 * [12.2. Fundamental Types: `reflect.Type` and `reflect.Value`](#122-fundamental-types-reflecttype-and-reflectvalue)
 * [12.3. Navigating Composite Data Structures](#123-navigating-composite-data-structures)
@@ -20,6 +21,7 @@ Metaprogramming in Go: the necessity of reflection, `reflect.Type` and `reflect.
 Reflection enables a program to **inspect and manipulate types, values, and memory representations dynamically at runtime** without knowing concrete types at compile time.
 
 ### Primary Use Cases:
+
 * Generic serialization and deserialization (`encoding/json`, `encoding/xml`, S-expressions).
 * Universal formatting of arbitrary values (`fmt.Printf("%v", x)`).
 * Template engines (`text/template`, `html/template`).
@@ -46,6 +48,7 @@ x := v.Interface().(int)  // Unpacking: reflect.Value -> any -> int
 ```
 
 ### Distinguishing `Type` from `Kind`:
+
 * **`Type`** describes the exact concrete or named type (`time.Duration`, `*os.File`, `main.Movie`).
 * **`Kind`** describes the underlying structural category (`reflect.Int64`, `reflect.Pointer`, `reflect.Struct`, `reflect.Slice`, `reflect.Map`, `reflect.Interface`, `reflect.Invalid`).
 
@@ -147,6 +150,7 @@ for i := 0; i < t.NumMethod(); i++ {
 > *«Reflection is a powerful tool, but it should be used with extreme care and moderation.»*
 
 ### 3 Major Drawbacks:
+
 1. **Fragility**: Type mismatches are invisible to the compiler and result in fatal runtime `panic` failures.
 2. **Reduced Readability and Maintainability**: Reflected code obscures data flow; IDE refactoring and static analysis tools cannot reliably track reflective field and method lookups.
 3. **Performance Overhead**: Reflection operations are typically **1 to 2 orders of magnitude slower** than direct statically compiled Go code. Avoid reflection in hot, performance-critical code paths.

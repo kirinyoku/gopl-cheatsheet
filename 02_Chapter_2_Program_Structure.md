@@ -5,6 +5,7 @@ Foundational principles of Go program organization: naming conventions and expor
 ---
 
 ### Table of Contents
+
 * [2.1. Names: Export Rules and Conventions](#21-names-export-rules-and-conventions)
 * [2.2. The Four Kinds of Declarations](#22-the-four-kinds-of-declarations)
 * [2.3. Variables, Pointers, and Memory Management](#23-variables-pointers-and-memory-management)
@@ -18,12 +19,14 @@ Foundational principles of Go program organization: naming conventions and expor
 ## 2.1. Names: Export Rules and Conventions
 
 ### First-Letter Rule (Export Visibility)
+
 Go does not use access modifier keywords like `public`, `private`, or `protected`. Visibility is controlled entirely by the case of the identifier's first letter:
 * **Capital letter** (`Print`, `User`, `ContentType`) $\to$ **Exported** (publicly accessible across package boundaries).
 * **Lowercase letter** (`calculate`, `user`, `internalState`) $\to$ **Unexported** (private, visible only within its package).
 * **Package names** are always written in lowercase as a single word (`bytes`, `json`, `tempconv`).
 
 ### CamelCase Conventions
+
 * Go standard style favors `camelCase` and `PascalCase` over `snake_case`.
 * **Acronyms maintain uniform casing**: write `serveHTTP`, `escapeHTML`, `userID`, `urlPath` (rather than `serveHttp`, `escapeHtml`, `userId`, `url_path`).
 * **Scoping length rule**: *"The smaller the variable's scope, the shorter its name"* (a local loop counter is `i`, a reader is `r`, a buffer is `b`).
@@ -53,6 +56,7 @@ At the package level, exactly four declaration keywords exist:
 ## 2.3. Variables, Pointers, and Memory Management
 
 ### Zero Values
+
 In Go, memory is always guaranteed to be safely initialized. Uninitialized variables receive their type's default zero value:
 
 | Data Type | Zero Value |
@@ -64,7 +68,9 @@ In Go, memory is always guaranteed to be safely initialized. Uninitialized varia
 | Structs (`struct`) | All fields recursively zero-initialized |
 
 ### Short Variable Declarations (`:=`)
+
 The `:=` syntax is allowed **only inside function bodies**:
+
 ```go
 in, err := os.Open("in.txt")     // Declares both in and err
 out, err := os.Create("out.txt") // Declares out, reassigns err
@@ -77,6 +83,7 @@ out, err := os.Create("out.txt") // Declares out, reassigns err
 ---
 
 ### Pointers (`&` and `*`)
+
 * `&x` — Address-of operator (yields type `*int`).
 * `*p` — Pointer dereference (accesses the value stored at the address).
 * The zero value of any pointer is `nil`.
@@ -89,6 +96,7 @@ func createPointer() *int {
 ```
 
 ### Escape Analysis
+
 Where a variable lives — **on the stack or on the heap** — is determined automatically by the compiler:
 * If a variable is local and never referenced after the function returns $\to$ allocated on the fast **stack**.
 * If a variable's address is returned, passed across goroutines, or stored in a persistent structure $\to$ it **escapes to the heap** and is managed by the garbage collector.
@@ -100,13 +108,17 @@ The built-in function `new(T)` allocates zero-initialized storage for type `T` a
 ## 2.4. Assignments and the Comma-Ok Idiom
 
 ### Tuple Assignment
+
 All right-hand side expressions are fully evaluated **before** variables on the left are updated, enabling in-place value swaps without temporary variables:
+
 ```go
 x, y = y, x // Safe value swap
 ```
 
 ### The Comma-Ok Idiom
+
 Used across Go to safely retrieve values alongside a boolean status flag:
+
 ```go
 val, ok := m[key] // ok == true if key exists in map
 val, ok := x.(T)  // ok == true if dynamic interface type matches T
@@ -131,6 +143,7 @@ var f Fahrenheit = 212
 ```
 
 ### Attaching Methods to Named Types
+
 Methods can be defined on any named type **declared within your package** (you cannot attach methods to types from external packages). For instance, implementing `fmt.Stringer`:
 
 ```go
@@ -148,11 +161,13 @@ func (c Celsius) String() string {
 * **Package-Internal Order**: Package-level variables are initialized first (in topological dependency order), followed by `init()` execution; files are processed in alphabetical order by the compiler.
 
 ### Initialization Functions (`init`)
+
 ```go
 func init() {
     // Precomputing lookup tables, checking environment variables
 }
 ```
+
 * Invoked automatically by the runtime before program execution starts.
 * Accept no arguments, return no values, and cannot be invoked manually.
 * A single file or package may define multiple `init()` functions.
@@ -162,6 +177,7 @@ func init() {
 ## 2.7. Scope vs Lifetime and Variable Shadowing
 
 ### Core Distinction
+
 * **Scope** — The syntactic block of source code where a name is visible to the compiler (compile-time property).
 * **Lifetime** — The duration for which a variable exists in memory (runtime property).
 
@@ -174,7 +190,7 @@ func init() {
 >
 > func init() {
 >     // BUG: := creates a LOCAL cwd variable; the package-level cwd remains ""!
->     cwd, err := os.Getwd() 
+>     cwd, err := os.Getwd()
 >     if err != nil {
 >         log.Fatal(err)
 >     }

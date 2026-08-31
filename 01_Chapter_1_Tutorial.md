@@ -5,6 +5,7 @@ An overview of basic Go syntax and conventions: running programs, control flow, 
 ---
 
 ### Table of Contents
+
 * [1.1. Hello, World: Program Structure and Execution](#11-hello-world-program-structure-and-execution)
 * [1.2. Command-Line Arguments and Loops](#12-command-line-arguments-and-loops)
 * [1.3. Finding Duplicate Lines: Files, Streams, and Maps](#13-finding-duplicate-lines-files-streams-and-maps)
@@ -31,6 +32,7 @@ func main() {
 ```
 
 ### Key Rules
+
 * **Entry point**: An executable program always belongs to `package main` and defines an entry function `func main()`. Any other package name is compiled as a reusable library.
 * **Compiler strictness**: Unused imports and unused local variables produce compile-time errors.
 * **Semicolons `;`**: Automatically inserted by the lexer at line endings according to syntactic rules. As a result, the opening curly brace `{` **must always be on the same line**:
@@ -45,6 +47,7 @@ func main() {
 * **Code formatting**: All Go code is formatted with the standard `gofmt` (or `goimports`) tool. In the Go ecosystem, stylistic disputes over indentation and spacing are eliminated by design.
 
 ### CLI Commands
+
 * `go run main.go` — Compiles source into a temporary directory (with build caching) and immediately executes the binary.
 * `go build main.go` — Compiles a standalone, statically linked executable with no external runtime dependencies.
 
@@ -56,11 +59,13 @@ func main() {
 ## 1.2. Command-Line Arguments and Loops
 
 ### Reading Arguments (`os.Args`)
+
 `os.Args` is a slice of strings (`[]string`) containing the command-line arguments passed to the program:
 * `os.Args[0]` — Name/path of the executing binary.
 * `os.Args[1:]` — Slice of user-supplied arguments.
 
 ### Go's Only Loop Keyword: `for`
+
 Go has no `while` or `do-while` loops. Every form of iteration is expressed using `for`:
 
 ```go
@@ -86,7 +91,9 @@ for idx, val := range os.Args[1:] {
 ```
 
 ### Blank Identifier `_`
+
 When the index or value from `range` is not needed, discard it using `_` to satisfy the compiler's unused-variable check:
+
 ```go
 for _, arg := range os.Args[1:] {
     fmt.Println(arg)
@@ -107,6 +114,7 @@ for _, arg := range os.Args[1:] {
 ## 1.3. Finding Duplicate Lines: Files, Streams, and Maps
 
 ### Hash Tables (`map`)
+
 * Initialization: `counts := make(map[string]int)`
 * **Default zero values**: Accessing a non-existent key returns the zero value for the value type (`0` for numbers, `""` for strings, `false` for booleans). Direct in-place incrementing is therefore safe:
   ```go
@@ -115,6 +123,7 @@ for _, arg := range os.Args[1:] {
 * Iteration order with `for key, val := range counts` is **intentionally randomized** to prevent code from relying on stable map ordering.
 
 ### Streaming Input with `bufio.Scanner`
+
 Reads arbitrarily large input line-by-line without loading entire files into memory:
 
 ```go
@@ -129,6 +138,7 @@ if err := scanner.Err(); err != nil {
 ```
 
 ### Reading Entire Small Files
+
 * `os.ReadFile("file.txt")` returns `([]byte, error)` — reads the whole file into a byte slice, which can be split using `strings.Split(string(data), "\n")`.
 
 > [!NOTE]
@@ -204,6 +214,7 @@ func main() {
 ```
 
 ### Core Principles
+
 1. **Goroutine (`go f()`)**: A lightweight user-space thread managed by the Go runtime. Spawning one takes fractions of a microsecond and requires only ~2 KB of initial memory.
 2. **Channel (`chan`)**: A typed conduit for synchronization and safe communication between goroutines.
    * `ch <- val` — Send (blocks until received on an unbuffered channel).

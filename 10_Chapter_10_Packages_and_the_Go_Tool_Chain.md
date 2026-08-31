@@ -5,6 +5,7 @@ Modular code architecture in Go: why compilation is exceptionally fast (DAG depe
 ---
 
 ### Table of Contents
+
 * [10.1. Why the Go Compiler Is Fast](#101-why-the-go-compiler-is-fast)
 * [10.2. Import Paths and Package Names](#102-import-paths-and-package-names)
 * [10.3. Blank Imports (`import _`)](#103-blank-imports-import-_)
@@ -78,6 +79,7 @@ db, err := sql.Open("postgres", dataSourceName)
 > * Descriptive: `imageutil` or `ioutil` is preferred over ambiguous `util` or `helper`.
 
 ### Avoid "Stuttering"
+
 Because exported identifiers are always qualified with their package name, identifier names must not repeat the package name:
 
 | Anti-Pattern | Idiomatic Go | Usage in Code |
@@ -100,13 +102,16 @@ Because exported identifiers are always qualified with their package name, ident
 > **Modern note (Go Modules):** In legacy `GOPATH` workflows, `go get` fetched and built binaries. Today, project dependencies are managed via `go.mod`: `go get`, `go mod tidy`, and `go mod download`. CLI development tools are installed using explicit versions: `go install golang.org/x/tools/cmd/goimports@latest` (the `@version` suffix is required outside a module).
 
 ### Native Cross-Compilation
+
 Build for any target operating system and CPU architecture without foreign toolchains:
+
 ```bash
 GOOS=linux GOARCH=arm64 go build -o myapp-arm64
 GOOS=windows GOARCH=amd64 go build -o myapp.exe
 ```
 
 ### Conditional Compilation (Build Tags)
+
 1. **File Suffixes**: `file_linux.go`, `file_windows.go`, `asm_amd64.s`.
 2. **Build Directives in Header**:
    ```go

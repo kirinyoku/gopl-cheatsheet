@@ -5,6 +5,7 @@ An in-depth guide to composite data structures in Go: fixed-size arrays, dynamic
 ---
 
 ### Table of Contents
+
 * [4.1. Arrays](#41-arrays)
 * [4.2. Slices](#42-slices)
 * [4.3. Maps (Hash Tables)](#43-maps-hash-tables)
@@ -19,6 +20,7 @@ An in-depth guide to composite data structures in Go: fixed-size arrays, dynamic
 An array is a **fixed-length** sequence of elements of a single type. In Go, arrays serve primarily as the low-level backing storage for slices.
 
 ### Array Characteristics
+
 * **Length is part of the type**: `[3]int` and `[4]int` are distinct, incompatible types. You cannot assign one to the other or pass mismatched lengths to functions.
 * **Pass-by-value**: Passing an array to a function **copies the entire array by value**, not by reference. To avoid copy overhead for large arrays, pass a pointer like `*[32]byte`.
 * **Equality**: Arrays can be compared using `==` as long as their element types are comparable.
@@ -39,6 +41,7 @@ days := [...]string{1: "Mon", 2: "Tue", 7: "Sun"} // Length 8 (indices 0..7)
 A slice is a lightweight 3-word descriptor referencing a contiguous segment of an **underlying array**.
 
 ### Internal Memory Layout
+
 A slice consists of exactly 3 machine words (24 bytes on 64-bit platforms):
 1. `ptr` — Pointer to the first element accessible by the slice.
 2. `len` — Current number of slice elements (`len(s)`).
@@ -60,6 +63,7 @@ Array:   [ 0 | 1 | 2 | 3 | 4 | 5 | ... ]
 ```
 
 ### Slice Mechanics
+
 * **Shared Backing Array**: Multiple slices can reference overlapping segments of the same underlying array. Modifying elements through one slice is visible in others.
 * **Comparison**: Slices **cannot be compared with `==`** (except against `nil`). For byte slices, use `bytes.Equal(a, b)`.
 
@@ -67,6 +71,7 @@ Array:   [ 0 | 1 | 2 | 3 | 4 | 5 | ... ]
 > To check if a slice is empty, always evaluate `len(s) == 0` rather than `s == nil`. An empty slice literal `[]int{}` is not `nil`, but its length is `0`.
 
 ### Growing Slices with `append`
+
 The built-in `append` function adds elements to the end of a slice:
 * If `len < cap` $\to$ The element is written into an unused slot in the existing backing array, and `len` increments.
 * If `len == cap` $\to$ A **new, larger backing array is allocated**, existing elements are copied over, and a new slice descriptor is returned.
@@ -79,6 +84,7 @@ s = append(s, otherSlice...) // Append slice via unpack operator '...'
 ```
 
 ### Idiomatic In-Place Slice Operations
+
 ```go
 // 1. Stack (LIFO)
 stack = append(stack, v)                // Push
@@ -110,6 +116,7 @@ func removeQuick(slice []int, i int) []int {
 `map[KeyType]ValueType` is an unordered collection of key-value pairs with $O(1)$ average-time lookups.
 
 ### Key Rules
+
 * **Key Requirements**: The key type must support the `==` comparison operator (integers, strings, booleans, pointers, structs composed of comparable fields). Slices, maps, and functions cannot serve as map keys.
 * **No Address-Of Operator**: Taking the address of a map value (`&m["key"]`) is **prohibited** because hash table growth can relocate items in memory.
 * **Unordered Iteration**: `for k, v := range m` yields keys in non-deterministic random order. To sort keys, copy them into a slice and sort via `sort.Strings()` (or `slices.Sort()`).
@@ -129,6 +136,7 @@ delete(ages, "alice")  // Safe to call even if key does not exist
 > Reading from an uninitialized map `var m map[string]int` (where `m == nil`) is safe and yields the value type's zero value. However, **writing to a `nil map` triggers a runtime panic**! Always initialize maps with `make` or `{}` before writing.
 
 ### Implementing Sets with `struct{}`
+
 ```go
 seen := make(map[string]struct{})
 seen["item"] = struct{}{} // struct{} takes zero bytes of memory
@@ -157,6 +165,7 @@ fmt.Println(p.Name) // Automatic pointer dereferencing (instead of (*p).Name)
 ```
 
 ### Composition via Embedding (Anonymous Fields)
+
 Go eschews inheritance in favor of **composition through anonymous struct embedding**:
 
 ```go
@@ -199,6 +208,7 @@ type Movie struct {
 ```
 
 ### JSON Processing Guidelines
+
 * **Exported Fields Only**: Unexported fields (starting with a lowercase letter) are silently ignored by the JSON encoder.
 * **Marshaling (Go $\to$ JSON)**:
   `data, err := json.Marshal(movie)` or indented `json.MarshalIndent(movie, "", "  ")`.

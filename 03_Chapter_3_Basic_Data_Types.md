@@ -5,6 +5,7 @@ A comprehensive overview of basic data types in Go: signed and unsigned integers
 ---
 
 ### Table of Contents
+
 * [3.1. Integers](#31-integers)
 * [3.2. Floating-Point Numbers](#32-floating-point-numbers)
 * [3.3. Complex Numbers and Boolean Types](#33-complex-numbers-and-boolean-types)
@@ -33,6 +34,7 @@ A comprehensive overview of basic data types in Go: signed and unsigned integers
 > In Go, `int` and `int64` (or `int32`) are treated as **distinct types by the compiler**, even on 64-bit architectures where their memory representation is identical. Implicit type conversions are never performed.
 
 ### Bitwise Operations
+
 * `&` (AND), `|` (OR), `^` (XOR, or unary `^x` for bitwise NOT).
 * `&^` — **Bit clear (AND NOT)**: `z = x &^ y` (clears any bits in `x` that are set in `y`).
 * `<<` and `>>` — Bitwise shifts (in Go 1.5, shift amounts required unsigned integers; since Go 1.13, any integer type is accepted, though negative shift values panic at runtime or cause compile errors if constant).
@@ -57,6 +59,7 @@ Two standard IEEE 754 floating-point types:
 * `float64` — ~15 decimal digits of precision (**standard default choice**).
 
 ### Special Values and `NaN` Comparison Mechanics
+
 * `+Inf` and `-Inf` — Positive and negative infinity (e.g., non-zero division by zero).
 * `NaN` (Not a Number) — Undefined mathematical operations (`0.0 / 0.0`, `math.Sqrt(-1)`).
 
@@ -83,6 +86,7 @@ Two standard IEEE 754 floating-point types:
 ## 3.4. Strings, UTF-8 Encoding, and Runes
 
 ### String Internals
+
 * A string in Go is an **immutable sequence of bytes**.
 * `len(s)` returns the **number of raw bytes**, not characters.
 * Indexing `s[i]` accesses the $i$-th individual byte.
@@ -99,6 +103,7 @@ raw := `SELECT id, name
 ```
 
 ### Distinguishing `byte`, `rune`, and `string`
+
 * **UTF-8** is a variable-length encoding (ASCII = 1 byte, Cyrillic/Greek = 2 bytes, CJK/Emoji = 3–4 bytes).
 * **Rune (`rune`)** represents a single Unicode code point (an `int32` alias), written in single quotes: `'A'`, `'я'`, `'🚀'`.
 
@@ -144,6 +149,7 @@ for byteOffset, r := range s {
 Constants (`const`) are strictly evaluated at compile time.
 
 ### The `iota` Enumerator
+
 Automatically increments starting from `0` within a `const` group:
 
 ```go
@@ -174,6 +180,7 @@ const (
 ```
 
 ### Untyped Constants
+
 Literals such as `42`, `3.14`, or `math.Pi` possess no fixed type initially and are computed with arbitrary precision by the compiler (at least 256 bits), adopting a concrete type only when assigned:
 
 ```go

@@ -5,6 +5,7 @@ The Go testing ecosystem: the `go test` toolchain, `*_test.go` file conventions,
 ---
 
 ### Table of Contents
+
 * [11.1. The `go test` Tool](#111-the-go-test-tool)
 * [11.2. Test Functions (`TestXxx`)](#112-test-functions-testxxx)
 * [11.3. Table-Driven Tests](#113-table-driven-tests)
@@ -41,6 +42,7 @@ func TestIsPalindrome(t *testing.T) {
 ```
 
 ### Core `*testing.T` Methods:
+
 * `t.Error(...)` / `t.Errorf(...)` — Records a test failure and marks the test failed, but **continues executing subsequent checks** (providing a complete picture of all failures in one run).
 * `t.Fatal(...)` / `t.Fatalf(...)` — Records a failure and **aborts the current test function immediately** (used when critical setup or preconditions fail).
 * `t.Logf(...)` — Formats and logs informational debug messages (displayed only on test failure or with the `-v` verbose flag).
@@ -73,6 +75,7 @@ func TestIsPalindrome(t *testing.T) {
 ```
 
 ### Useful `go test` Flags:
+
 * `go test -v` — Verbose mode, displaying individual test names and execution duration.
 * `go test -run="French|Canal"` — Filters tests to run using a regex pattern matching test names.
 
@@ -121,7 +124,9 @@ If an internal test for a low-level package like `net/url` needs to import a hig
 * `go test` compiles it as an independent external consumer package, cleanly breaking the cycle.
 
 ### The `export_test.go` Pattern (Accessing Unexported Identifiers):
+
 To expose an unexported symbol `internalHelper` exclusively to external tests in `package url_test` without polluting the public API:
+
 ```go
 // File export_test.go (compiled ONLY during go test):
 package url

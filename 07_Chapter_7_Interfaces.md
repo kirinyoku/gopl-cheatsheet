@@ -5,6 +5,7 @@ Interfaces in Go as abstract behavioral contracts: implicit implementation witho
 ---
 
 ### Table of Contents
+
 * [7.1. Interfaces as Behavioral Contracts](#71-interfaces-as-behavioral-contracts)
 * [7.2. Implicit Implementation](#72-implicit-implementation)
 * [7.3. Internal Structure of Interface Values](#73-internal-structure-of-interface-values)
@@ -26,13 +27,17 @@ type Stringer interface {
     String() string
 }
 ```
+
 *Any type defining a `String() string` method automatically satisfies `fmt.Stringer` and is formatted cleanly by `fmt.Printf("%v", x)`.*
 
 ### Naming Conventions
+
 Single-method interfaces are conventionally named by appending `-er` to the method name (`Reader`, `Writer`, `Closer`, `Formatter`).
 
 ### Interface Embedding (Composition)
+
 Interfaces can be composed into larger contracts by embedding:
+
 ```go
 type Reader interface { Read(p []byte) (n int, err error) }
 type Writer interface { Write(p []byte) (n int, err error) }
@@ -56,10 +61,13 @@ w = new(bytes.Buffer) // OK: *bytes.Buffer implements Write
 ```
 
 ### Receiver Semantics (`T` vs `*T`):
+
 If a method is defined on a pointer receiver `func (s *IntSet) String() string`, then `fmt.Stringer` is satisfied **only by `*IntSet`**, not by the value `IntSet`.
 
 ### The Empty Interface `any` (`interface{}`)
+
 The empty interface contains zero methods $\to$ **every type satisfies it** (`any` is the official standard alias for `interface{}` since Go 1.18):
+
 ```go
 var x any = 42
 x = "text"
@@ -107,7 +115,9 @@ Interface Value: [ Dynamic Type (*os.File) | Dynamic Value Pointer (&os.Stdout) 
 ## 7.4. Sorting with `sort.Interface` and Web Handlers with `http.Handler`
 
 ### Custom Sorting via `sort.Interface`
+
 The `sort` package is abstracted from data representations via a 3-method contract:
+
 ```go
 type Interface interface {
     Len() int           // Number of elements
@@ -127,6 +137,7 @@ sort.Sort(ByAge(people))
 > **Modern note:** Go 1.8 introduced `sort.Slice(people, func(i, j int) bool { return people[i].Age < people[j].Age })`. Furthermore, Go 1.21 added generic functions `slices.Sort` and `slices.SortFunc(people, func(a, b Person) int { return cmp.Compare(a.Age, b.Age) })`. Defining a custom 3-method type via `sort.Interface` is now needed only for non-slice data structures.
 
 ### Web Handlers (`http.Handler`)
+
 ```go
 type Handler interface {
     ServeHTTP(ResponseWriter, *Request)

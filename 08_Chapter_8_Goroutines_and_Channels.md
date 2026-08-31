@@ -5,6 +5,7 @@ Concurrent programming using the CSP (Communicating Sequential Processes) paradi
 ---
 
 ### Table of Contents
+
 * [8.1. Goroutines](#81-goroutines)
 * [8.2. Channels](#82-channels)
 * [8.3. Pipelines and Channel Closing Rules](#83-pipelines-and-channel-closing-rules)
@@ -23,6 +24,7 @@ Go embraces the **CSP model**: independent concurrent activities (goroutines) co
 > *«Do not communicate by sharing memory; instead, share memory by communicating.»*
 
 ### Core Rules
+
 * **Launching**: Use the `go` keyword before a function call:
   ```go
   go doWork() // Executes asynchronously in a new goroutine
@@ -44,6 +46,7 @@ close(ch)            // Close channel
 ```
 
 ### 1. Unbuffered Channels (Synchronous)
+
 * `make(chan int)` — Buffer capacity is 0.
 * **Rendezvous Principle**:
   * A send operation blocks until another goroutine receives from the channel.
@@ -51,6 +54,7 @@ close(ch)            // Close channel
   * Guarantees a strict **happens-before** synchronization boundary between sender and receiver.
 
 ### 2. Buffered Channels (Asynchronous)
+
 * `make(chan string, 3)` — Buffer capacity is 3.
 * Sends block **only when the buffer is full**.
 * Receives block **only when the buffer is empty**.
@@ -74,6 +78,7 @@ for x := range ch {
 ```
 
 ### Closed Channel Behavior:
+
 1. Writing to a closed channel $\to$ **RUNTIME PANIC**.
 2. Closing an already closed channel $\to$ **RUNTIME PANIC**.
 3. Reading from a closed channel: Drains remaining buffered values, then yields the type's zero value immediately without blocking.
@@ -167,6 +172,7 @@ default:
 ```
 
 ### `select` Properties:
+
 * If multiple channels are ready simultaneously, Go picks one **pseudo-randomly** to ensure fair scheduling.
 * `select {}` blocks the goroutine indefinitely.
 * A `nil` channel case in a `select` is never chosen (useful for dynamically disabling branches).
